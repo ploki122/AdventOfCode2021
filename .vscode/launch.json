@@ -26,6 +26,20 @@
             "args": ["3"]
         },
         {
+            "name": "Day 4",
+            "type": "python",
+            "request": "launch",
+            "program": "main.py",
+            "args": ["4"]
+        },
+        {
+            "name": "Day 5",
+            "type": "python",
+            "request": "launch",
+            "program": "main.py",
+            "args": ["5"]
+        },
+        {
             "name": "Python: Current File",
             "type": "python",
             "request": "launch",
