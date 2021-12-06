@@ -1,0 +1,36 @@
+{
+    // Use IntelliSense to learn about possible attributes.
+    // Hover to view descriptions of existing attributes.
+    // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "Day 1",
+            "type": "python",
+            "request": "launch",
+            "program": "main.py",
+            "args": ["1"]
+        },
+        {
+            "name": "Day 2",
+            "type": "python",
+            "request": "launch",
+            "program": "main.py",
+            "args": ["2"]
+        },
+        {
+            "name": "Day 3",
+            "type": "python",
+            "request": "launch",
+            "program": "main.py",
+            "args": ["3"]
+        },
+        {
+            "name": "Python: Current File",
+            "type": "python",
+            "request": "launch",
+            "program": "${file}",
+            "console": "integratedTerminal"
+        }
+    ]
+}
