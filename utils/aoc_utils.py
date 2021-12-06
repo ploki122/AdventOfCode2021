@@ -11,7 +11,7 @@ def day(dayNumber):
     return day_decorator
 
 class AOCDay:
-    year = 2020
+    year = 2021
     dayNumber = 0
     inputFilename = ""
     outputFilename = ""
