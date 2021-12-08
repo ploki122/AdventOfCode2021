@@ -1,16 +1,16 @@
 from utils.aoc_utils import AOCDay, day
 
-global char_segments
-char_segments = ["abcefg", 
-                 "cf", 
-                 "acdeg", 
-                 "acdfg", 
-                 "bcdf", 
-                 "abdfg", 
-                 "abdefg", 
-                 "acf", 
-                 "abcdefg", 
-                 "abcdfg"]
+global chars
+chars = ["abcefg", 
+        "cf", 
+        "acdeg", 
+        "acdfg", 
+        "bcdf", 
+        "abdfg", 
+        "abdefg", 
+        "acf", 
+        "abcdefg", 
+        "abcdfg"]
 
 @day(8)
 class Day8(AOCDay):
@@ -50,19 +50,64 @@ class Display():
     inputs = []
     outputs = []
     
+    known_patterns = []
+
     def __init__(self, line):
         self.inputs = line[:line.index("|")-1].split(" ")
         self.outputs = line[line.index("|")+2:].split(" ")
         self.segments = {"a":Segment(), "b":Segment(), "c":Segment(), "d":Segment(), "e":Segment(), "f":Segment(), "g":Segment()}
+        self.known_patterns = [""]*10
 
     def __str__(self):
         return " ".join(self.inputs + ["|"] + self.outputs)
+
+    def match_solve(self):
+        # 0 - 6 length, 1, -4, 7
+        # 1 - 2 length
+        # 2 - 5 length, -1
+        # 3 - 5 length, 1, -4, 7
+        # 4 - 4 length
+        # 5 - 5 length, -1
+        # 6 - 6 length, -1
+        # 7 - 3 length
+        # 8 - 7 length
+        # 9 - 6 length, 1, 4, 7
+
+        for display in self.inputs:
+            if len(display) == 2:
+                self.known_patterns[1] = set(display)
+            elif len(display) == 3:
+                self.known_patterns[7] = set(display)
+            elif len(display) == 4:
+                self.known_patterns[4] = set(display)
+            elif len(display) == 7:
+                self.known_patterns[8] = set(display)
+            else:
+                display_5_6.append(display)
+        
+        for display in display_5_6:
+            if len(display) == 5:
+                if self.known_patterns[1].issubset(set(display)):
+                    self.known_patterns[3] = set(display)
+                elif len(self.known_patterns[4].difference(set(display))) == 1:
+                    self.known_patterns[5] = set(display)
+                else:
+                    self.known_patterns[2] = set(display)
+            elif len(display) == 6:
+                if not self.known_patterns[1].issubset(set(display)):
+                    self.known_patterns[6] = set(display)
+                elif self.known_patterns[4].issubset(set(display)):
+                    self.known_patterns[9] = set(display)
+                else:
+                    self.known_patterns[0] = set(display)
+            else:
+                print(display, "?")
 
     def solve(self):
         progress_is_made = True
         while (progress_is_made):
             progress_is_made = False
-            for display in self.inputs + self.outputs:
+            for display in self.inputs:
                 for (key, segment) in self.segments.items():
                     if key in display:
                         progress_is_made = segment.is_in_segments(display) or progress_is_made
@@ -75,6 +120,16 @@ class Display():
                         if key2 != key:
                             progress_is_made = segment2.remove_options(segment.value()) and progress_is_made
             
+    def match_compute_value(self):
+        total = 0
+        for number in self.outputs :
+            for i in range(len(self.known_patterns)):
+                if self.known_patterns[i] == set(number):
+                    total = total * 10 + i
+                    break
+
+        print("compute", total)
+        return total
             
     def compute_value(self):
         total = 0
@@ -98,7 +153,7 @@ class Segment():
         if len(self.possible) == 1:
             return self.possible
 
-        return "z"
+        return "+"
     
     def is_in_segments(self, display):
         length = len(display)
