@@ -67,9 +67,9 @@ if __name__ == "__main__":
             # Getting the good days instance
             curDay : AOCDay = AOCDays.getInstance().getDay(dayNum)
             
-            try:
-                inst = curDay(year, dayNum, sessionToken)
-                inst.run()
-            except Exception as e:
-                print(e, file=sys.stderr)
-                sys.exit(1)
+            # try:
+            inst = curDay(year, dayNum, sessionToken)
+            inst.run()
+            # except Exception as e:
+            #     print(e, file=sys.stderr)
+            #     sys.exit(1)

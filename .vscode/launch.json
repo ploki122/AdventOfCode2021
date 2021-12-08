@@ -4,6 +4,7 @@
     // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
     "version": "0.2.0",
     "configurations": [
+
         {
             "name": "Day 1",
             "type": "python",
@@ -38,6 +39,27 @@
             "request": "launch",
             "program": "main.py",
             "args": ["5"]
+        },
+        {
+            "name": "Day 6",
+            "type": "python",
+            "request": "launch",
+            "program": "main.py",
+            "args": ["6"]
+        },
+        {
+            "name": "Day 7",
+            "type": "python",
+            "request": "launch",
+            "program": "main.py",
+            "args": ["7"]
+        },
+        {
+            "name": "Day 8",
+            "type": "python",
+            "request": "launch",
+            "program": "main.py",
+            "args": ["8"]
         },
         {
             "name": "Python: Current File",

@@ -1,21 +1,45 @@
 from utils.aoc_utils import AOCDay, day
 
-global chars
-chars = ["abcefg", 
-        "cf", 
-        "acdeg", 
-        "acdfg", 
-        "bcdf", 
-        "abdfg", 
-        "abdefg", 
-        "acf", 
-        "abcdefg", 
-        "abcdfg"]
+global charset
+charset = {"0":"abcefg", 
+           "1":"cf", 
+           "2":"acdeg", 
+           "3":"acdfg", 
+           "4":"bcdf", 
+           "5":"abdfg", 
+           "6":"abdefg", 
+           "7":"acf", 
+           "8":"abcdefg", 
+           "9":"abcdfg"}
+
+global segment_list
+segment_list = "".join(sorted("".join(set("".join(charset.values())))))
+
+global chars_by_length
+chars_by_length = {length:list(filter(lambda x: (len(x) == length), charset.values())) for length in range(len(segment_list)+1)}
+
+global mandatory_segments_by_length
+mandatory_segments_by_length = {key:"".join(list(filter(lambda c:("".join(chars_by_length[key])).count(c)==len(chars_by_length[key]) and len(chars_by_length[key]) > 0, [char for char in segment_list]))) for key in chars_by_length.keys()}
+    
+global obsolete_segments_by_length
+obsolete_segments_by_length = {key:"".join(list(filter(lambda c:("".join(chars_by_length[key])).count(c)==0, [char for char in segment_list]))) for key in chars_by_length.keys()}
 
 @day(8)
 class Day8(AOCDay):
+    charset = {}
+    segment_list = []
+    chars_by_length = {}
+    mandatory_segments_by_length = {}
+    obsolete_segments_by_length = {}
+
     def common(self):
         print("\n\n== Common ==")
+        print("charset", charset)
+        print("segment_list", segment_list)
+        print("chars_by_length", chars_by_length)
+        print("mandatory_segments_by_length", mandatory_segments_by_length)
+        print("obsolete_segments_by_length", obsolete_segments_by_length)
+        
         parsedData = []
         for line in self.inputData:
             if line == "":
@@ -33,6 +57,7 @@ class Day8(AOCDay):
             for word in line.outputs:
                 if len(word) in [2, 4, 3, 7]:
                     count += 1
+                
         return count
     
     def part2(self):
@@ -40,68 +65,22 @@ class Day8(AOCDay):
         total = 0
         for line in self.inputData:
             line.solve()
-            total += line.compute_value()
+            total += int(line.compute_value())
 
         return total
 
 class Display():
     segments = {}
-
     inputs = []
     outputs = []
-    
-    known_patterns = []
 
     def __init__(self, line):
         self.inputs = line[:line.index("|")-1].split(" ")
         self.outputs = line[line.index("|")+2:].split(" ")
-        self.segments = {"a":Segment(), "b":Segment(), "c":Segment(), "d":Segment(), "e":Segment(), "f":Segment(), "g":Segment()}
-        self.known_patterns = [""]*10
+        self.segments = {segment:Segment() for segment in segment_list}
 
     def __str__(self):
         return " ".join(self.inputs + ["|"] + self.outputs)
-
-    def match_solve(self):
-        # 0 - 6 length, 1, -4, 7
-        # 1 - 2 length
-        # 2 - 5 length, -1
-        # 3 - 5 length, 1, -4, 7
-        # 4 - 4 length
-        # 5 - 5 length, -1
-        # 6 - 6 length, -1
-        # 7 - 3 length
-        # 8 - 7 length
-        # 9 - 6 length, 1, 4, 7
-
-        for display in self.inputs:
-            if len(display) == 2:
-                self.known_patterns[1] = set(display)
-            elif len(display) == 3:
-                self.known_patterns[7] = set(display)
-            elif len(display) == 4:
-                self.known_patterns[4] = set(display)
-            elif len(display) == 7:
-                self.known_patterns[8] = set(display)
-            else:
-                display_5_6.append(display)
-        
-        for display in display_5_6:
-            if len(display) == 5:
-                if self.known_patterns[1].issubset(set(display)):
-                    self.known_patterns[3] = set(display)
-                elif len(self.known_patterns[4].difference(set(display))) == 1:
-                    self.known_patterns[5] = set(display)
-                else:
-                    self.known_patterns[2] = set(display)
-            elif len(display) == 6:
-                if not self.known_patterns[1].issubset(set(display)):
-                    self.known_patterns[6] = set(display)
-                elif self.known_patterns[4].issubset(set(display)):
-                    self.known_patterns[9] = set(display)
-                else:
-                    self.known_patterns[0] = set(display)
-            else:
-                print(display, "?")
 
     def solve(self):
         progress_is_made = True
@@ -110,102 +89,63 @@ class Display():
             for display in self.inputs:
                 for (key, segment) in self.segments.items():
                     if key in display:
-                        progress_is_made = segment.is_in_segments(display) or progress_is_made
+                        progress_is_made = segment.is_in_length(len(display)) or progress_is_made
                     else:
-                        progress_is_made = segment.is_not_in_segments(display) or progress_is_made
+                        progress_is_made = segment.is_not_in_length(len(display)) or progress_is_made
             
             for (key, segment) in self.segments.items():
                 if segment.value() is not None:
                     for (key2, segment2) in self.segments.items():
                         if key2 != key:
-                            progress_is_made = segment2.remove_options(segment.value()) and progress_is_made
-            
-    def match_compute_value(self):
-        total = 0
-        for number in self.outputs :
-            for i in range(len(self.known_patterns)):
-                if self.known_patterns[i] == set(number):
-                    total = total * 10 + i
-                    break
-
-        print("compute", total)
-        return total
-            
+                            progress_is_made = segment2.remove(segment.value()) and progress_is_made
+                
     def compute_value(self):
-        total = 0
+        value = ""
         for i in range(len(self.outputs)):
-            total += self.what_number(self.outputs[i]) * 10**(len(self.outputs)-i-1)
+            value += self.decode(self.outputs[i])
 
-        return total
-        
-    def what_number(self, segments):
+        return value
+      
+    def decode(self, segments):
         expected_match = "".join(sorted(set("".join([self.segments[char].possible for char in segments]))))
-        
-        for i in range(0, 10):
-            if char_segments[i] == expected_match :
-                return i
-        
+        if len(expected_match) != len(segments):
+            print("decode", segments, expected_match)
+            return "ERROR"
 
+        for (char, pattern) in charset.items() :
+            if pattern == expected_match :
+                return char
+        
 class Segment():
-    possible = "abcdefg"
+    possible = segment_list
     
     def value(self):
         if len(self.possible) == 1:
             return self.possible
-
-        return "+"
     
-    def is_in_segments(self, display):
-        length = len(display)
-        # 2 = [1]
-        # 3 = [7]
-        # 4 = [4]
-        # 5 = [2, 3, 5]
-        # 6 = [0, 6, 9]
-        # 7 = [8]
+    def is_in_length(self, length):
+        has_changed = False
+        if len(chars_by_length[length]) == 1:
+            has_changed = self.keep(chars_by_length[length][0])
+        
+        has_changed = self.remove(obsolete_segments_by_length[length]) and has_changed
+        
+        return has_changed
 
-        if length == 2 :
-            return self.remove_options("abdeg")
-        elif length == 3 :
-            return self.remove_options("bdeg")
-        elif length == 4 :
-            return self.remove_options("aeg")
-        elif length == 5 :
-            return False
-        elif length == 6 :
-            return False
-        elif length == 7 :
-            return False
-        else :
-            print("What the fuck?", display, length)
-            return False
+    def is_not_in_length(self, length):
+        has_changed = False
+        if len(chars_by_length[length]) == 1:
+            has_changed = self.remove(chars_by_length[length][0])
+        
+        has_changed = self.remove(mandatory_segments_by_length[length]) and has_changed
 
-    def is_not_in_segments(self, display):
-        length = len(display)
-        # 2 = [1]
-        # 3 = [7]
-        # 4 = [4]
-        # 5 = [2, 3, 5]
-        # 6 = [0, 6, 9]
-        # 7 = [8]
+        return has_changed
 
-        if length == 2 :
-            return self.remove_options("cf")
-        elif length == 3 :
-            return self.remove_options("acf")
-        elif length == 4 :
-            return self.remove_options("bcdf")
-        elif length == 5 :
-            return self.remove_options("adg")
-        elif length == 6 :
-            return self.remove_options("abfg")
-        elif length == 7 :
-            return False
-        else :
-            print("What the fuck?", display, length)
-            return False
-
-    def remove_options(self, segments):
+    def remove(self, segments):
         previous_self = self.possible
         self.possible = self.possible.translate({ord(char): None for char in segments})
         return self.possible != previous_self
+
+    def keep(self, segments):
+        segments_to_remove = segment_list.translate({ord(char): None for char in segments})
+        return self.remove(segments_to_remove)
