@@ -65,7 +65,7 @@ class Day8(AOCDay):
         total = 0
         for line in self.inputData:
             line.solve()
-            total += int(line.compute_value())
+            total += int(line.compute_value(), len(charset))
 
         return total
 
@@ -84,9 +84,10 @@ class Display():
 
     def solve(self):
         progress_is_made = True
+        useful_cryptos = self.outputs
         while (progress_is_made):
             progress_is_made = False
-            for display in self.inputs:
+            for display in self.outputs + self.inputs:
                 for (key, segment) in self.segments.items():
                     if key in display:
                         progress_is_made = segment.is_in_length(len(display)) or progress_is_made
@@ -109,12 +110,13 @@ class Display():
     def decode(self, segments):
         expected_match = "".join(sorted(set("".join([self.segments[char].possible for char in segments]))))
         if len(expected_match) != len(segments):
-            print("decode", segments, expected_match)
-            return "ERROR"
+            return None
 
         for (char, pattern) in charset.items() :
             if pattern == expected_match :
                 return char
+                
+        return None
         
 class Segment():
     possible = segment_list
