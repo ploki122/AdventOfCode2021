@@ -17,12 +17,13 @@ class AOCDay:
     outputFilename = ""
     sessionToken = ""
     inputData = None
+    minimalisticTrace = False
 
-
-    def __init__(self, year, dayNumber, sessionToken):
+    def __init__(self, year, dayNumber, sessionToken, minimalisticTrace):
         self.year = int(year)
         self.dayNumber = int(dayNumber)
         self.sessionToken = sessionToken
+        self.minimalisticTrace = minimalisticTrace
 
         fileName = "day" + str(dayNumber) + ".txt"
 
@@ -60,18 +61,19 @@ class AOCDay:
         totalTime = time0 + time1 + time2
 
         # Writing output
-        self.writeOutput(
-            "====================== Day" + str(self.dayNumber) + " ======================",
-            "Common time (ms) : " + str(time0),
-            "---------------------------------------------------",
-            "Part 1 : " + str(answer1),
-            "Time (ms): " + str(time1),
-            "---------------------------------------------------",
-            "Part 2 : " + str(answer2),
-            "Time (ms): " + str(time2),
-            "---------------------------------------------------",
-            "Total time (ms): " + str(totalTime)
-        )
+        if self.minimalisticTrace:
+            self.writeOutput(
+                "====================== Day" + str(self.dayNumber) + " ======================",
+                "Common time (ms) : " + str(time0),
+                "---------------------------------------------------",
+                "Part 1 : " + str(answer1),
+                "Time (ms): " + str(time1),
+                "---------------------------------------------------",
+                "Part 2 : " + str(answer2),
+                "Time (ms): " + str(time2),
+                "---------------------------------------------------",
+                "Total time (ms): " + str(totalTime)
+            )
 
 
     def downloadInput(self):

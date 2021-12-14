@@ -1,6 +1,7 @@
 import sys
 import os
 import shutil
+import time
 
 from dotenv import load_dotenv
 
@@ -58,18 +59,16 @@ if __name__ == "__main__":
     # Else we run it normally
     else:
         if runAll:
-            daysRun = [x+1 for x in range(25)]
-        else:
-            daysRun = [dayNumber]
-    
+            startTime = time.time()
 
-        for dayNum in daysRun:
-            # Getting the good days instance
-            curDay : AOCDay = AOCDays.getInstance().getDay(dayNum)
-            
-            # try:
-            inst = curDay(year, dayNum, sessionToken)
-            inst.run()
-            # except Exception as e:
-            #     print(e, file=sys.stderr)
-            #     sys.exit(1)
+            for dayNum in [x+1 for x in range(14)]:
+                curDay : AOCDay = AOCDays.getInstance().getDay(dayNumber)
+                inst = curDay(year, dayNum, sessionToken, True)
+                inst.run()
+
+            totalTime = time.time() - startTime
+            print("Grand total (ms):", totalTime)
+
+        else:
+            curDay : AOCDay = AOCDays.getInstance().getDay(dayNumber)
+            curDay(year, dayNumber, sessionToken, False).run()
