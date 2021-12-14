@@ -7,11 +7,13 @@ class Day9(AOCDay):
     key_per_basin = {}
 
     def common(self):
-        print("\n\n== Common ==")
+        if self.minimalisticTrace: 
+            print("\n\n== Common ==")
         return 0
 
     def part1(self):
-        print("\n\n== Part 1 ==")
+        if self.minimalisticTrace: 
+            print("\n\n== Part 1 ==")
         weakspots = []
         for i in range(len(self.inputData)):
             for j in range(len(self.inputData[i])):
@@ -29,11 +31,13 @@ class Day9(AOCDay):
 
                 weakspots.append(int(self.inputData[i][j]))
 
-        print(weakspots)
+        if self.minimalisticTrace: 
+            print(weakspots)
         return sum(weakspots) + len(weakspots)
     
     def part2(self):
-        print("\n\n== Part 2 ==")
+        if self.minimalisticTrace: 
+            print("\n\n== Part 2 ==")
         counter = 0
         for i in range(len(self.inputData)):
             counter += 1
@@ -61,10 +65,13 @@ class Day9(AOCDay):
             for j in range(len(self.inputData[i])):
                 key = self.key(i,j)
                 if key in self.basin_per_key:
-                    print(chr(self.basin_per_key[key]%26+97), end="")
+                    if self.minimalisticTrace: 
+                        print(chr(self.basin_per_key[key]%26+97), end="")
                 else:
-                    print(" ", end="")
-            print()
+                    if self.minimalisticTrace: 
+                        print(" ", end="")
+            if self.minimalisticTrace: 
+                print()
 
         biggest_basins = sorted([len(v) for v in self.key_per_basin.values()], reverse=True)
         return biggest_basins[0]*biggest_basins[1]*biggest_basins[2]

@@ -5,11 +5,13 @@ from utils.aoc_utils import AOCDay, day
 class Day11(AOCDay):
     array = None
     def common(self):
-        print("\n\n== Common ==")
+        if self.minimalisticTrace: 
+            print("\n\n== Common ==")
         return 0
 
     def part1(self):
-        print("\n\n== Part 1 ==")
+        if self.minimalisticTrace: 
+            print("\n\n== Part 1 ==")
         self.array = PoulpeArray(self.inputData)
         total = 0
 
@@ -25,7 +27,8 @@ class Day11(AOCDay):
         return total
     
     def part2(self):
-        print("\n\n== Part 2 ==")
+        if self.minimalisticTrace: 
+            print("\n\n== Part 2 ==")
         self.array = PoulpeArray(self.inputData)
 
         array_size = len(self.array.poulpes) * len(self.array.poulpes[0])
@@ -40,8 +43,9 @@ class Day11(AOCDay):
                     total += poulpe.try_reset()
 
             if days in [0, 1, 2, 3, 4, 5, 6, 7, 8 ,9, 10, 20, 30, 40, 50, 60, 70, 80, 90, 100]:
-                print("After step", days)
-                print(self.array)
+                if self.minimalisticTrace: 
+                    print("After step", days)
+                    print(self.array)
 
             if total == array_size:
                 return days

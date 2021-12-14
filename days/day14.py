@@ -6,7 +6,8 @@ class Day14(AOCDay):
     equations = {}
     pairs = {}
     def common(self):
-        print("\n\n== Common ==")
+        if self.minimalisticTrace: 
+            print("\n\n== Common ==")
         for line in self.inputData:
             if self.polymer == "":
                 self.polymer = line
@@ -23,14 +24,16 @@ class Day14(AOCDay):
                 self.pairs[fragment] = 0
             self.pairs[fragment] += 1
 
-        print(self.polymer, self.pairs, self.equations)
+        if self.minimalisticTrace: 
+            print(self.polymer, self.pairs, self.equations)
         return 0
 
     def part1(self):
-        print("\n\n== Part 1 ==")
         work_pairs = self.pairs.copy()
-        print(0, work_pairs)
-        print(self.equations)
+        if self.minimalisticTrace: 
+            print("\n\n== Part 1 ==")
+            print(0, work_pairs)
+            print(self.equations)
         for step in range(0, 10):
             new_pairs = {}
             for (pair, num) in work_pairs.items():
@@ -40,7 +43,8 @@ class Day14(AOCDay):
                             new_pairs[result] = 0
                         new_pairs[result] += num
             work_pairs = new_pairs
-            print(step, work_pairs)
+            if self.minimalisticTrace: 
+                print(step, work_pairs)
         
         occurences = {}
         for (pair, num) in work_pairs.items():
@@ -57,21 +61,24 @@ class Day14(AOCDay):
         return int((my_max - my_min)/2)
     
     def part2(self):
-        print("\n\n== Part 2 ==")
         work_pairs = self.pairs.copy()
-        print(0, work_pairs)
-        print(self.equations)
+        if self.minimalisticTrace: 
+            print("\n\n== Part 2 ==")
+            print(0, work_pairs)
+            print(self.equations)
         for step in range(0, 40):
             new_pairs = {}
             for (pair, num) in work_pairs.items():
-                print(pair, num)
+                if self.minimalisticTrace: 
+                    print(pair, num)
                 if pair in self.equations:
                     for result in self.equations[pair]:
                         if result not in new_pairs:
                             new_pairs[result] = 0
                         new_pairs[result] += num
             work_pairs = new_pairs
-            print(step, work_pairs)
+            if self.minimalisticTrace: 
+                print(step, work_pairs)
         
         occurences = {}
         for (pair, num) in work_pairs.items():
@@ -82,7 +89,8 @@ class Day14(AOCDay):
         occurences[self.polymer[0]] += 1
         occurences[self.polymer[len(self.polymer)-1]] += 1
 
-        print(self.polymer[0], self.polymer[len(self.polymer)-1], occurences.values(), min(occurences.values()), max(occurences.values()))
+        if self.minimalisticTrace: 
+            print(self.polymer[0], self.polymer[len(self.polymer)-1], occurences.values(), min(occurences.values()), max(occurences.values()))
         my_min = min(occurences.values())
         my_max = max(occurences.values())
 

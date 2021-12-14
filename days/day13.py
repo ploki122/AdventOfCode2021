@@ -5,7 +5,8 @@ class Day13(AOCDay):
     sheet = []
     instructions = []
     def common(self):
-        print("\n\n== Common ==")
+        if self.minimalisticTrace:
+            print("\n\n== Common ==")
         dots = []
         first_half = True
         for line in self.inputData:
@@ -23,7 +24,8 @@ class Day13(AOCDay):
         for n in range(0, height):
             self.sheet.append([False] * length)
 
-        print("height", len(self.sheet), "width", len(self.sheet[0]))
+        if self.minimalisticTrace: 
+            print("height", len(self.sheet), "width", len(self.sheet[0]))
         for dot in dots:
             self.sheet[dot["y"]][dot["x"]] = True
 
@@ -34,7 +36,8 @@ class Day13(AOCDay):
             pass
 
     def fold (self, sheet, instruction):
-        print(instruction)
+        if self.minimalisticTrace: 
+            print(instruction)
 
         new_sheet = []
         fold_x = len(sheet[0])
@@ -60,23 +63,28 @@ class Day13(AOCDay):
         return new_sheet
 
     def part1(self):
-        print("\n\n== Part 1 ==")
+        if self.minimalisticTrace: 
+            print("\n\n== Part 1 ==")
         
         new_dots = self.fold(self.sheet, self.instructions[0])
         return sum([int(v) for line in new_dots for v in line])
     
     def part2(self):
-        print("\n\n== Part 2 ==")
+        if self.minimalisticTrace: 
+            print("\n\n== Part 2 ==")
         new_sheet = self.sheet
         for inst in self.instructions:
             new_sheet = self.fold(new_sheet, inst);        
         
         for line in new_sheet:
-            print()
+            if self.minimalisticTrace: 
+                print()
             for dot in line:
-                print("#" if dot else ".", end="")
-
-        print()
-        print()
+                if self.minimalisticTrace: 
+                    print("#" if dot else ".", end="")
+        
+        if self.minimalisticTrace: 
+            print()
+            print()
 
         return 0

@@ -33,12 +33,13 @@ class Day8(AOCDay):
     obsolete_segments_by_length = {}
 
     def common(self):
-        print("\n\n== Common ==")
-        print("charset", charset)
-        print("segment_list", segment_list)
-        print("chars_by_length", chars_by_length)
-        print("mandatory_segments_by_length", mandatory_segments_by_length)
-        print("obsolete_segments_by_length", obsolete_segments_by_length)
+        if self.minimalisticTrace: 
+            print("\n\n== Common ==")
+            print("charset", charset)
+            print("segment_list", segment_list)
+            print("chars_by_length", chars_by_length)
+            print("mandatory_segments_by_length", mandatory_segments_by_length)
+            print("obsolete_segments_by_length", obsolete_segments_by_length)
         
         parsedData = []
         for line in self.inputData:
@@ -51,7 +52,8 @@ class Day8(AOCDay):
         return 0
 
     def part1(self):
-        print("\n\n== Part 1 ==")
+        if self.minimalisticTrace: 
+            print("\n\n== Part 1 ==")
         count = 0
         for line in self.inputData:
             for word in line.outputs:
@@ -61,7 +63,8 @@ class Day8(AOCDay):
         return count
     
     def part2(self):
-        print("\n\n== Part 2 ==")
+        if self.minimalisticTrace: 
+            print("\n\n== Part 2 ==")
         total = 0
         for line in self.inputData:
             line.solve()

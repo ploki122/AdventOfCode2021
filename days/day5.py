@@ -3,17 +3,20 @@ from utils.aoc_utils import AOCDay, day
 @day(5)
 class Day5(AOCDay):
     def common(self):
-        print("\n\n== Common ==")
+        if self.minimalisticTrace: 
+            print("\n\n== Common ==")
         return 0
 
     def part1(self):
-        print("\n\n== Part 1 ==")
+        if self.minimalisticTrace: 
+            print("\n\n== Part 1 ==")
         ocean_floor = [[0 for i in range(0, 1000)] for j in range(0, 1000)]
 
         for line in self.inputData:
             coord1, coord2 = self.parseline(line)
             if coord1.x == coord2.x or coord1.y == coord2.y:
-                print(str(coord1) + " -> " + str(coord2))
+                if self.minimalisticTrace: 
+                    print(str(coord1) + " -> " + str(coord2))
                 for i in range(min(coord1.x, coord2.x), max(coord1.x, coord2.x)+1):
                     for j in range(min(coord1.y, coord2.y), max(coord1.y, coord2.y)+1):
                         ocean_floor[i][j] += 1
@@ -27,7 +30,8 @@ class Day5(AOCDay):
         return count
     
     def part2(self):
-        print("\n\n== Part 2 ==")
+        if self.minimalisticTrace: 
+            print("\n\n== Part 2 ==")
         ocean_floor = [[0 for i in range(0, 1000)] for j in range(0, 1000)]
 
         for line in self.inputData:
@@ -38,20 +42,23 @@ class Day5(AOCDay):
             maxy = max(coord1.y, coord2.y)
 
             if coord1.x == coord2.x or coord1.y == coord2.y:
-                print(str(coord1) + " -> " + str(coord2))
+                if self.minimalisticTrace: 
+                    print(str(coord1) + " -> " + str(coord2))
                 for i in range(minx, maxx+1):
                     for j in range(miny, maxy+1):
                         ocean_floor[i][j] += 1
                         
             elif maxx-minx == maxy-miny:
-                print(str(coord1) + " -> " + str(coord2))
+                if self.minimalisticTrace: 
+                    print(str(coord1) + " -> " + str(coord2))
                 factor_x = 1 if coord2.x >= coord1.x else -1
                 factor_y = 1 if coord2.y >= coord1.y else -1
                 for i in range(0, maxx-minx+1):
                     ocean_floor[coord1.x + (i*factor_x)][coord1.y + (i*factor_y)] += 1
                     
             else:
-                print("Skip : " + str(coord1) + " -> " + str(coord2))
+                if self.minimalisticTrace: 
+                    print("Skip : " + str(coord1) + " -> " + str(coord2))
         
         count = 0
         for line in ocean_floor:

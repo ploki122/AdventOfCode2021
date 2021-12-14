@@ -3,12 +3,14 @@ from utils.aoc_utils import AOCDay, day
 @day(10)
 class Day10(AOCDay):
     def common(self):
-        print("\n\n== Common ==")
+        if self.minimalisticTrace: 
+            print("\n\n== Common ==")
         # print(self.inputData)
         return 0
 
     def part1(self):
-        print("\n\n== Part 1 ==")
+        if self.minimalisticTrace: 
+            print("\n\n== Part 1 ==")
         total = 0
         points = {")":3, "]":57, "}":1197, ">":25137}
         for line in self.inputData:
@@ -31,7 +33,8 @@ class Day10(AOCDay):
         return total
     
     def part2(self):
-        print("\n\n== Part 2 ==")
+        if self.minimalisticTrace: 
+            print("\n\n== Part 2 ==")
         totals = []
         points = {"(":1, "[":2, "{":3, "<":4}
         for line in self.inputData:

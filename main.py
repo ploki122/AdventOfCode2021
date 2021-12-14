@@ -62,8 +62,8 @@ if __name__ == "__main__":
             startTime = time.time()
 
             for dayNum in [x+1 for x in range(14)]:
-                curDay : AOCDay = AOCDays.getInstance().getDay(dayNumber)
-                inst = curDay(year, dayNum, sessionToken, True)
+                curDay : AOCDay = AOCDays.getInstance().getDay(dayNum)
+                inst = curDay(year, dayNum, sessionToken, False)
                 inst.run()
 
             totalTime = time.time() - startTime
@@ -71,4 +71,4 @@ if __name__ == "__main__":
 
         else:
             curDay : AOCDay = AOCDays.getInstance().getDay(dayNumber)
-            curDay(year, dayNumber, sessionToken, False).run()
+            curDay(year, dayNumber, sessionToken, True).run()

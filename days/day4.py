@@ -6,7 +6,8 @@ class Day4(AOCDay):
     cards = []
 
     def common(self):
-        print("\n\n== Common ==")
+        if self.minimalisticTrace: 
+            print("\n\n== Common ==")
         self.numbers = self.inputData[0].split(",")
         i=2
         while i < len(self.inputData):
@@ -16,7 +17,8 @@ class Day4(AOCDay):
         return 0
 
     def part1(self):
-        print("\n\n== Part 1 ==")
+        if self.minimalisticTrace: 
+            print("\n\n== Part 1 ==")
         for i in range(6, len(self.numbers)) :
             for card in self.cards:
                 if card.has_bingo(self.numbers[0:i]):
@@ -25,7 +27,8 @@ class Day4(AOCDay):
         return 0
     
     def part2(self):
-        print("\n\n== Part 2 ==")
+        if self.minimalisticTrace: 
+            print("\n\n== Part 2 ==")
         for i in range(6, len(self.numbers)) :
             remaining_cards = []
 
@@ -68,6 +71,6 @@ class BingoCard():
                     
                 printStr += " "
 
-        print(printStr)
-        print(str(score) + " * " + numbers[len(numbers)-1])
+        # print(printStr)
+        # print(str(score) + " * " + numbers[len(numbers)-1])
         return score * int(numbers[len(numbers)-1])

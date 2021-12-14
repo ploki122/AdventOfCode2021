@@ -11,7 +11,8 @@ class DayTemplate(AOCDay):
             if (int(self.inputData[i]) < int(self.inputData[i+1])):
                 nbResult += 1
         
-        print(nbResult)
+        if self.minimalisticTrace: 
+            print(nbResult)
         return nbResult
     
     def part2(self):
@@ -20,5 +21,7 @@ class DayTemplate(AOCDay):
             if (int(self.inputData[i]) < int(self.inputData[i+3])):
                 nbResult += 1
         
-        print(nbResult)
+        if not self.minimalisticTrace: 
+            print(nbResult)
+
         return nbResult

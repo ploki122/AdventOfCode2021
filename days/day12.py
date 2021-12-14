@@ -4,7 +4,8 @@ from utils.aoc_utils import AOCDay, day
 class Day12(AOCDay):
     neighbors = {}
     def common(self):
-        print("\n\n== Common ==")
+        if self.minimalisticTrace: 
+            print("\n\n== Common ==")
         for line in self.inputData:
             if(line == ""):
                 break
@@ -21,7 +22,8 @@ class Day12(AOCDay):
 
             self.neighbors[start_end[1]].append(start_end[0])
         
-        print(self.neighbors)
+        if self.minimalisticTrace: 
+            print(self.neighbors)
         return 0 
 
     def attemptPath_part1(self, path, current_node):
@@ -29,7 +31,8 @@ class Day12(AOCDay):
 
         curr_path = path.copy()
         if current_node not in self.neighbors:
-            print("Not a node!")
+            if self.minimalisticTrace: 
+                print("Not a node!")
             return []
         
         curr_path.append(current_node)
@@ -52,7 +55,8 @@ class Day12(AOCDay):
 
         curr_path = path.copy()
         if current_node not in self.neighbors:
-            print("Not a node!")
+            if self.minimalisticTrace: 
+                print("Not a node!")
             return []
         
         curr_path.append(current_node)
@@ -71,12 +75,14 @@ class Day12(AOCDay):
         return paths
 
     def part1(self):
-        print("\n\n== Part 1 ==")
+        if self.minimalisticTrace: 
+            print("\n\n== Part 1 ==")
         paths = self.attemptPath_part1([], "start")
         return len(paths)
     
     def part2(self):
-        print("\n\n== Part 2 ==")
+        if self.minimalisticTrace: 
+            print("\n\n== Part 2 ==")
         paths = self.attemptPath_part2([], "", "start")
         return len(paths)
 
@@ -84,10 +90,10 @@ class NodeSingles():
     nodes = {}
     
     def get_node(name):
-        if not name in nodes:
-            nodes[name] = Node(name)
+        if not name in self.nodes:
+            self.nodes[name] = Node(name)
         
-        return nodes[name]
+        return self.nodes[name]
 
 class Node():
     name = ""

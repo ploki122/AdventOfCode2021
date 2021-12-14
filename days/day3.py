@@ -42,8 +42,9 @@ class Day3(AOCDay):
 
         for i in range(len(self.inputData[0])):
             most_common_co2 = self.most_common_digit(co2_scrub, i)
-            print("")
-            print("most_common_digit(self, " + str(co2_scrub) + ", " + str(i) + ") = " + most_common_co2)
+            if self.minimalisticTrace: 
+                print("")
+                print("most_common_digit(self, " + str(co2_scrub) + ", " + str(i) + ") = " + most_common_co2)
             new_co2 = []
             for line_co2 in co2_scrub:
                 if (line_co2[i] != most_common_co2):
@@ -53,8 +54,9 @@ class Day3(AOCDay):
             if len(co2_scrub)== 1:
                 break
         
-        print("oxy : " + str(oxy_gen))
-        print("co2 : " + str(co2_scrub))
+        if self.minimalisticTrace: 
+            print("oxy : " + str(oxy_gen))
+            print("co2 : " + str(co2_scrub))
         dec_oxy = int(oxy_gen[0], 2)
         dec_co2 = int(co2_scrub[0], 2)
 

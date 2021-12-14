@@ -74,6 +74,9 @@ class AOCDay:
                 "---------------------------------------------------",
                 "Total time (ms): " + str(totalTime)
             )
+        else : 
+            self.writeOutput("Day " + str(self.dayNumber).rjust(2, ' ') + ", part 1 : " + str(answer1).rjust(15, ' ') + "    " + str(round(time1, 4)).ljust(4, '0'), 
+                             "Day " + str(self.dayNumber).rjust(2, ' ') + ", part 2 : " + str(answer2).rjust(15, ' ') + "    " + str(round(time2, 4)).ljust(4, '0'))
 
 
     def downloadInput(self):
