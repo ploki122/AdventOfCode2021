@@ -61,7 +61,7 @@ if __name__ == "__main__":
         if runAll:
             startTime = time.time()
 
-            for dayNum in [x+1 for x in range(14)]:
+            for dayNum in [x+1 for x in range(17)]:
                 curDay : AOCDay = AOCDays.getInstance().getDay(dayNum)
                 inst = curDay(year, dayNum, sessionToken, False)
                 inst.run()
